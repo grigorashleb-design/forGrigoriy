@@ -1,0 +1,25 @@
+class EnemyLogic
+{
+    public void HandleTurn(GameWorld world, GameLevel level)
+    {
+        foreach (var enemy in world.Enemies)
+        {
+            var dx = world.Player.X > enemy.X ? 1 : world.Player.X < enemy.X ? -1 : 0;
+            var dy = world.Player.Y > enemy.Y ? 1 : world.Player.Y < enemy.Y ? -1 : 0;
+
+            if (Math.Abs(world.Player.X - enemy.X) <= 1 && Math.Abs(world.Player.Y - enemy.Y) <= 1)
+            {
+                world.Player.Stats.Health--;
+                continue;
+            }
+
+            var nextX = enemy.X + dx;
+            var nextY = enemy.Y + dy;
+            if (level.GetTile(nextX, nextY) == '.' && !world.IsPlayerAt(nextX, nextY))
+            {
+                enemy.X = nextX;
+                enemy.Y = nextY;
+            }
+        }
+    }
+}
