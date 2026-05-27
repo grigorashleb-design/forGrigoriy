@@ -1,19 +1,9 @@
-class Enemy
+class Enemy : Character
 {
     public Enemy(int x, int y)
+        : base(3)
     {
         X = x;
         Y = y;
-    }
-
-    public int X { get; set; }
-
-    public int Y { get; set; }
-
-    public int Health { get; private set; } = 3;
-
-    public void TakeDamage(int damage)
-    {
-        Health -= damage;
     }
 }

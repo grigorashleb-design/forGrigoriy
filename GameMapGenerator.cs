@@ -3,10 +3,12 @@ class GameMapGenerator
     private const int Width = 60;
     private const int Height = 20;
     private readonly Random _rng = new();
+    private readonly ItemFactory _itemFactory = new();
 
     public GeneratedLevel Generate(int level)
     {
         var map = CreateEmptyMap();
+        var items = new GameItem?[Width, Height];
 
         CreateRandomWalls(map);
 
@@ -30,20 +32,22 @@ class GameMapGenerator
         Shuffle(freeTiles);
 
         const int goldCount = 5;
-        const int medkitCount = 3;
+        const int smallMedkitCount = 3;
+        const int bigMedkitCount = 1;
 
-        PlaceGold(map, freeTiles, goldCount);
-        PlaceMedkits(map, freeTiles, goldCount, medkitCount);
+        PlaceItems(items, freeTiles, 0, goldCount, _itemFactory.CreateGold);
+        PlaceItems(items, freeTiles, goldCount, smallMedkitCount, _itemFactory.CreateSmallMedkit);
+        PlaceItems(items, freeTiles, goldCount + smallMedkitCount, bigMedkitCount, _itemFactory.CreateBigMedkit);
 
         var enemyCount = 3 + level;
 
         var enemies = CreateEnemies(
             freeTiles,
-            goldCount + medkitCount,
+            goldCount + smallMedkitCount + bigMedkitCount,
             enemyCount);
 
         return new GeneratedLevel(
-            new GameLevel(Width, Height, map),
+            new GameLevel(Width, Height, map, items),
             enemies,
             playerStartX,
             playerStartY);
@@ -124,29 +128,19 @@ class GameMapGenerator
         }
     }
 
-    private void PlaceGold(char[,] map, List<(int x, int y)> freeTiles, int count)
-    {
-        count = Math.Min(count, freeTiles.Count);
-
-        for (var i = 0; i < count; i++)
-        {
-            var (x, y) = freeTiles[i];
-            map[x, y] = '$';
-        }
-    }
-
-    private void PlaceMedkits(
-        char[,] map,
+    private void PlaceItems(
+        GameItem?[,] items,
         List<(int x, int y)> freeTiles,
         int startIndex,
-        int count)
+        int count,
+        Func<GameItem> createItem)
     {
         count = Math.Min(count, freeTiles.Count - startIndex);
 
         for (var i = 0; i < count; i++)
         {
             var (x, y) = freeTiles[startIndex + i];
-            map[x, y] = '+';
+            items[x, y] = createItem();
         }
     }
 

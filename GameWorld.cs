@@ -46,6 +46,24 @@ class GameWorld
         return Character.X == x && Character.Y == y;
     }
 
+    public bool IsEnemyAt(int x, int y)
+    {
+        return GetEnemyAt(x, y) != null;
+    }
+
+    public void PickUpItem(Character character, GameLevel level)
+    {
+        var item = level.GetItem(character.X, character.Y);
+
+        if (item == null)
+        {
+            return;
+        }
+
+        item.ApplyTo(character);
+        level.RemoveItem(character.X, character.Y);
+    }
+
     public Enemy? GetEnemyAt(int x, int y)
     {
         foreach (var enemy in Enemies)

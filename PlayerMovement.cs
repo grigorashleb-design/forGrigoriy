@@ -41,14 +41,14 @@ class PlayerMovement
             {
                 world.Enemies.Remove(enemy);
 
-                world.Character.AddGold(20);
+                world.Character.AddGold(20 + enemy.Gold);
             }
 
             return false;
         }
 
     
-        if (level.GetTile(nextX, nextY) == '#')
+        if (level.GetTerrainTile(nextX, nextY) == '#')
         {
             return false;
         }
@@ -57,21 +57,8 @@ class PlayerMovement
         world.Character.X = nextX;
         world.Character.Y = nextY;
 
-  
-        if (level.GetTile(world.Character.X, world.Character.Y) == '$')
-        {
-            world.Character.AddGold(10);
+        world.PickUpItem(world.Character, level);
 
-            level.SetTile(world.Character.X, world.Character.Y, '.');
-        }
-
-        if (level.GetTile(world.Character.X, world.Character.Y) == '+')
-        {
-            world.Character.Heal(3);
-
-            level.SetTile(world.Character.X, world.Character.Y, '.');
-        }
-
-        return level.GetTile(world.Character.X, world.Character.Y) == '>';
+        return level.GetTerrainTile(world.Character.X, world.Character.Y) == '>';
     }
 }

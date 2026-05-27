@@ -15,10 +15,17 @@ class EnemyLogic
 
             var nextX = enemy.X + dx;
             var nextY = enemy.Y + dy;
-            if (level.GetTile(nextX, nextY) == '.' && !world.IsPlayerAt(nextX, nextY))
+            var tile = level.GetTerrainTile(nextX, nextY);
+
+            if (tile != '#' &&
+                tile != '>' &&
+                !world.IsPlayerAt(nextX, nextY) &&
+                !world.IsEnemyAt(nextX, nextY))
             {
                 enemy.X = nextX;
                 enemy.Y = nextY;
+
+                world.PickUpItem(enemy, level);
             }
         }
     }
