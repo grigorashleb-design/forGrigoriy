@@ -9,7 +9,7 @@ class EnemyLogic
 
             if (Math.Abs(world.Player.X - enemy.X) <= 1 && Math.Abs(world.Player.Y - enemy.Y) <= 1)
             {
-                world.Player.Stats.Health--;
+                world.Player.TakeDamage(1);
                 continue;
             }
 

@@ -35,7 +35,7 @@ class PlayerMovement
 
         if (enemy != null)
         {
-            enemy.Health -= world.Player.Stats.Damage;
+            enemy.TakeDamage(world.Player.Stats.Damage);
 
             if (enemy.Health <= 0)
             {
@@ -61,6 +61,13 @@ class PlayerMovement
         if (level.GetTile(world.Player.X, world.Player.Y) == '$')
         {
             world.Player.Stats.Gold += 10;
+
+            level.SetTile(world.Player.X, world.Player.Y, '.');
+        }
+
+        if (level.GetTile(world.Player.X, world.Player.Y) == '+')
+        {
+            world.Player.Heal(3);
 
             level.SetTile(world.Player.X, world.Player.Y, '.');
         }

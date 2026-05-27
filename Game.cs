@@ -43,7 +43,7 @@ class Game
         _currentLevel = generatedLevel.Level;
 
         _world.StartLevel(generatedLevel);
-        _world.Player.Stats.Health = 10;
+        _world.Player.SetHealth(10);
     }
 
     private void Draw()

@@ -10,5 +10,10 @@ class Enemy
 
     public int Y { get; set; }
 
-    public int Health { get; set; } = 3;
+    public int Health { get; private set; } = 3;
+
+    public void TakeDamage(int damage)
+    {
+        Health -= damage;
+    }
 }

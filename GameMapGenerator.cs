@@ -30,14 +30,16 @@ class GameMapGenerator
         Shuffle(freeTiles);
 
         const int goldCount = 5;
+        const int medkitCount = 3;
 
         PlaceGold(map, freeTiles, goldCount);
+        PlaceMedkits(map, freeTiles, goldCount, medkitCount);
 
         var enemyCount = 3 + level;
 
         var enemies = CreateEnemies(
             freeTiles,
-            goldCount,
+            goldCount + medkitCount,
             enemyCount);
 
         return new GeneratedLevel(
@@ -130,6 +132,21 @@ class GameMapGenerator
         {
             var (x, y) = freeTiles[i];
             map[x, y] = '$';
+        }
+    }
+
+    private void PlaceMedkits(
+        char[,] map,
+        List<(int x, int y)> freeTiles,
+        int startIndex,
+        int count)
+    {
+        count = Math.Min(count, freeTiles.Count - startIndex);
+
+        for (var i = 0; i < count; i++)
+        {
+            var (x, y) = freeTiles[startIndex + i];
+            map[x, y] = '+';
         }
     }
 

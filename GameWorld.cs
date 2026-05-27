@@ -46,7 +46,7 @@ class GameWorld
         return Player.X == x && Player.Y == y;
     }
 
-    public Enemy GetEnemyAt(int x, int y)
+    public Enemy? GetEnemyAt(int x, int y)
     {
         foreach (var enemy in Enemies)
         {
