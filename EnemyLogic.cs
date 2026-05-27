@@ -4,12 +4,12 @@ class EnemyLogic
     {
         foreach (var enemy in world.Enemies)
         {
-            var dx = world.Player.X > enemy.X ? 1 : world.Player.X < enemy.X ? -1 : 0;
-            var dy = world.Player.Y > enemy.Y ? 1 : world.Player.Y < enemy.Y ? -1 : 0;
+            var dx = world.Character.X > enemy.X ? 1 : world.Character.X < enemy.X ? -1 : 0;
+            var dy = world.Character.Y > enemy.Y ? 1 : world.Character.Y < enemy.Y ? -1 : 0;
 
-            if (Math.Abs(world.Player.X - enemy.X) <= 1 && Math.Abs(world.Player.Y - enemy.Y) <= 1)
+            if (Math.Abs(world.Character.X - enemy.X) <= 1 && Math.Abs(world.Character.Y - enemy.Y) <= 1)
             {
-                world.Player.TakeDamage(1);
+                world.Character.TakeDamage(1);
                 continue;
             }
 

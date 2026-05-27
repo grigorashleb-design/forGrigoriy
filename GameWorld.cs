@@ -9,16 +9,16 @@ class GameWorld
         _enemyLogic = enemyLogic;
     }
 
-    public Player Player { get; } = new();
+    public Character Character { get; } = new();
 
     public List<Enemy> Enemies { get; } = new();
 
-    public bool IsRunning => Player.Stats.Health > 0;
+    public bool IsRunning => Character.Health > 0;
 
     public void StartLevel(GeneratedLevel generatedLevel)
     {
-        Player.X = generatedLevel.PlayerStartX;
-        Player.Y = generatedLevel.PlayerStartY;
+        Character.X = generatedLevel.PlayerStartX;
+        Character.Y = generatedLevel.PlayerStartY;
 
         Enemies.Clear();
         Enemies.AddRange(generatedLevel.Enemies);
@@ -29,7 +29,7 @@ class GameWorld
         var shouldLoadNextLevel = _playerMovement.HandleTurn(this, level);
         if (shouldLoadNextLevel)
         {
-            Player.Stats.Level++;
+            Character.LevelUp();
             return true;
         }
 
@@ -43,7 +43,7 @@ class GameWorld
 
     public bool IsPlayerAt(int x, int y)
     {
-        return Player.X == x && Player.Y == y;
+        return Character.X == x && Character.Y == y;
     }
 
     public Enemy? GetEnemyAt(int x, int y)

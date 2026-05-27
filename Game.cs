@@ -38,12 +38,12 @@ class Game
     private void StartLevel()
     {
         var generatedLevel =
-            _mapGenerator.Generate(_world.Player.Stats.Level);
+            _mapGenerator.Generate(_world.Character.Level);
 
         _currentLevel = generatedLevel.Level;
 
         _world.StartLevel(generatedLevel);
-        _world.Player.SetHealth(10);
+        _world.Character.SetHealth(10);
     }
 
     private void Draw()
@@ -81,9 +81,9 @@ class Game
 
         buffer.Append(
             $"[WASD] Движение | " +
-            $"HP: {_world.Player.Stats.Health} | " +
-            $"Gold: {_world.Player.Stats.Gold} | " +
-            $"Level: {_world.Player.Stats.Level}");
+            $"HP: {_world.Character.Health} | " +
+            $"Gold: {_world.Character.Gold} | " +
+            $"Level: {_world.Character.Level}");
 
         Console.Write(buffer.ToString());
     }
@@ -94,8 +94,8 @@ class Game
 
         Console.WriteLine(
             $"ИГРА ОКОНЧЕНА. " +
-            $"Ваше золото: {_world.Player.Stats.Gold} " +
-            $"на {_world.Player.Stats.Level} уровне.");
+            $"Ваше золото: {_world.Character.Gold} " +
+            $"на {_world.Character.Level} уровне.");
 
         Console.ReadKey();
     }

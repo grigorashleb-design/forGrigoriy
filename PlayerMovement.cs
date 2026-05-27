@@ -27,21 +27,21 @@ class PlayerMovement
             dx = 1;
         }
 
-        var nextX = world.Player.X + dx;
-        var nextY = world.Player.Y + dy;
+        var nextX = world.Character.X + dx;
+        var nextY = world.Character.Y + dy;
 
    
         var enemy = world.GetEnemyAt(nextX, nextY);
 
         if (enemy != null)
         {
-            enemy.TakeDamage(world.Player.Stats.Damage);
+            enemy.TakeDamage(world.Character.Damage);
 
             if (enemy.Health <= 0)
             {
                 world.Enemies.Remove(enemy);
 
-                world.Player.Stats.Gold += 20;
+                world.Character.AddGold(20);
             }
 
             return false;
@@ -54,24 +54,24 @@ class PlayerMovement
         }
 
 
-        world.Player.X = nextX;
-        world.Player.Y = nextY;
+        world.Character.X = nextX;
+        world.Character.Y = nextY;
 
   
-        if (level.GetTile(world.Player.X, world.Player.Y) == '$')
+        if (level.GetTile(world.Character.X, world.Character.Y) == '$')
         {
-            world.Player.Stats.Gold += 10;
+            world.Character.AddGold(10);
 
-            level.SetTile(world.Player.X, world.Player.Y, '.');
+            level.SetTile(world.Character.X, world.Character.Y, '.');
         }
 
-        if (level.GetTile(world.Player.X, world.Player.Y) == '+')
+        if (level.GetTile(world.Character.X, world.Character.Y) == '+')
         {
-            world.Player.Heal(3);
+            world.Character.Heal(3);
 
-            level.SetTile(world.Player.X, world.Player.Y, '.');
+            level.SetTile(world.Character.X, world.Character.Y, '.');
         }
 
-        return level.GetTile(world.Player.X, world.Player.Y) == '>';
+        return level.GetTile(world.Character.X, world.Character.Y) == '>';
     }
 }
